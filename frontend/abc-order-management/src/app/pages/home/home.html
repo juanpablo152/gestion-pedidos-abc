@@ -2,7 +2,7 @@
   <div class="home">
     <header class="home-header">
       <div class="header-left">
-        <h1 class="page-title">Dashboard</h1>
+        <h1 class="page-title">{{ pageTitle() }}</h1>
         <p class="page-subtitle">Bienvenido de vuelta, {{ currentUser?.name }}</p>
       </div>
       <div class="header-right">
@@ -19,9 +19,9 @@
 
     <div class="home-body">
       <ui-table
-        title="Publicaciones recientes"
+        [title]="pageTitle()"
         [columns]="columns"
-        [data]="[]"
+        [data]="users()"
         [loading]="loading()"
       />
     </div>

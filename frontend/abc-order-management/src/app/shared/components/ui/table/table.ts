@@ -16,11 +16,18 @@ export class TableComponent {
   @Input() emptyMessage = 'No hay datos disponibles';
   @Input() title = '';
 
-  skeletonRows = [1, 2, 3, 4, 5];
 
   getCellValue(row: any, col: TableColumn): string {
-    const value = row[col.key];
+    const value = this.resolveValue(row, col.key);
     if (col.formatter) return col.formatter(value, row);
-    return value ?? '—';
+    return value !== null && value !== undefined ? String(value) : '—';
+  }
+
+  private resolveValue(obj: any, path: string): any {
+    return path.split('.').reduce((acc, key) => acc?.[key], obj);
+  }
+
+  trackByIndex(index: number): number {
+    return index;
   }
 }

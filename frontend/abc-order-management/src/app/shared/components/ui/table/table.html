@@ -2,7 +2,6 @@
   @if (title) {
     <div class="table-header">
       <h3 class="table-title">{{ title }}</h3>
-      <span class="table-count">{{ data.length }} registros</span>
     </div>
   }
   <div class="table-scroll">
@@ -16,13 +15,6 @@
       </thead>
       <tbody>
         @if (loading) {
-          @for (i of skeletonRows; track i) {
-            <tr class="skeleton-row">
-              @for (col of columns; track col.key) {
-                <td><span class="skeleton"></span></td>
-              }
-            </tr>
-          }
         } @else if (data.length === 0) {
           <tr>
             <td [attr.colspan]="columns.length" class="table-empty">
@@ -30,7 +22,7 @@
             </td>
           </tr>
         } @else {
-          @for (row of data; track row.id) {
+          @for (row of data; track $index) {
             <tr>
               @for (col of columns; track col.key) {
                 <td [title]="getCellValue(row, col)">{{ getCellValue(row, col) }}</td>
