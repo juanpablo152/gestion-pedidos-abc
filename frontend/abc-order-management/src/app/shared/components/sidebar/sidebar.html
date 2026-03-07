@@ -1,0 +1,35 @@
+<aside class="sidebar" [class.sidebar--collapsed]="collapsed">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      @if (!collapsed) {
+        <span class="logo-icon">🏢</span>
+        <span class="logo-text">ABC Corp</span>
+      }
+    </div>
+    <button class="sidebar-toggle" (click)="toggleCollapse.emit()" type="button" [title]="collapsed ? 'Expandir' : 'Colapsar'">
+      {{ collapsed ? '▶' : '◀' }}
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    @for (item of visibleNavItems; track item.route) {
+      <a
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        class="nav-item"
+        [title]="collapsed ? item.label : ''"
+      >
+        <span class="nav-icon">{{ item.icon }}</span>
+        @if (!collapsed) {
+          <span class="nav-label">{{ item.label }}</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    @if (!collapsed) {
+      <span class="sidebar-version">v1.0.0</span>
+    }
+  </div>
+</aside>

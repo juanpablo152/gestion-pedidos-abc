@@ -1,0 +1,54 @@
+services:
+  db_mongo:
+    image: mongo:latest
+    container_name: abc_mongodb
+    ports:
+      - "27017:27017"
+
+  users-service:
+    build:
+      context: ./backend/users-api
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db_mongo
+
+  order-service:
+    build:
+      context: ./backend/order-api
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db_mongo
+
+  payment-service:
+    build:
+      context: ./backend/payment-api
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db_mongo
+  
+  frontend:
+    build:
+      context: ./frontend/abc-order-management
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend/abc-order-management:/app
+      - /app/node_modules
+    environment:
+      - NG_CLI_ANALYTICS=false
+    command: npm start -- --host 0.0.0.0 --poll 2000
+    stdin_open: true
+    tty: true

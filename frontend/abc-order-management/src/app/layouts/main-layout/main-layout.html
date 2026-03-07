@@ -1,0 +1,15 @@
+<div class="main-layout">
+  <app-sidebar
+    class="main-sidebar"
+    [collapsed]="sidebarCollapsed()"
+    (toggleCollapse)="toggleSidebar()"
+  />
+
+  <div class="main-content">
+    <ng-content />
+  </div>
+</div>
+
+@if (mobileMenuOpen()) {
+  <div class="mobile-overlay" (click)="toggleMobileMenu()"></div>
+}

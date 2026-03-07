@@ -1,0 +1,29 @@
+<app-main-layout>
+  <div class="home">
+    <header class="home-header">
+      <div class="header-left">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Bienvenido de vuelta, {{ currentUser?.name }}</p>
+      </div>
+      <div class="header-right">
+        <div class="user-badge">
+          <span class="user-avatar">{{ currentUser?.name?.charAt(0)?.toUpperCase() }}</span>
+          <div class="user-info">
+            <span class="user-name">{{ currentUser?.name }}</span>
+            <span class="user-role">{{ currentUser?.role }}</span>
+          </div>
+        </div>
+        <button class="logout-btn" (click)="logout()" type="button">Salir</button>
+      </div>
+    </header>
+
+    <div class="home-body">
+      <ui-table
+        title="Publicaciones recientes"
+        [columns]="columns"
+        [data]="[]"
+        [loading]="loading()"
+      />
+    </div>
+  </div>
+</app-main-layout>

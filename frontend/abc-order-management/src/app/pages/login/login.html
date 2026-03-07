@@ -1,0 +1,43 @@
+<app-auth-layout>
+  <section class="login-card">
+    <div class="login-head">
+      <h2>Bienvenido</h2>
+      <p>Ingresa tus credenciales para continuar</p>
+    </div>
+
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ui-input
+        label="Correo electrónico"
+        type="email"
+        placeholder="usuario@abc.com"
+        [control]="usernameControl"
+      />
+
+      <ui-input
+        label="Contraseña"
+        type="password"
+        placeholder="••••••••"
+        [control]="passwordControl"
+      />
+
+      @if (errorMessage()) {
+        <div class="login-error">
+          <span>⚠️</span>
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <ui-button
+        label="Iniciar sesión"
+        type="submit"
+        [loading]="loading()"
+        [fullWidth]="true"
+      />
+    </form>
+
+    <div class="login-hint">
+      <p><strong>Credencial de prueba admin:</strong> admin@abc.com / admin123</p>
+      <p><strong>Credencial de prueba user:</strong> juan@abc.com / juan123</p>
+    </div>
+  </section>
+</app-auth-layout>

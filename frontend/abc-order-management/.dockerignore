@@ -1,0 +1,12 @@
+node_modules
+dist
+npm-debug.log
+yarn-error.log
+.gitignore
+.vscode
+.idea
+.angular
+.sass-cache
+.git
+.gitignore
+.gitignore
