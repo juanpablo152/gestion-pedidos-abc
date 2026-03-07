@@ -1,5 +1,30 @@
 # Gestión de Pedidos ABC — MVP Migración a Microservicios
 
+# Frontend
+
+## Descripción general del proyecto
+
+Se realiza el proyecto con Angular enfocado en dos vistas principales login y home.
+Se utilizó una arquitectura por capas y de features para el desarrollo y para los componentes más pequeños hasta los medianos se uso Atomic Design, esto en un MVP funciona ya que como se requiere a futuro un escalado permite que las proximas pantallas a construir sea mucho más rápido ya que se tienen componentes reutilizables que solo es pasar la información. Y con la arquitectura de capas y features permite tener un front bien organizado y que se puede escalar identificando donde va cada nuevo componente y caracteristicas a implementar.
+
+Se usaron también:
+- **signal**: Para el manejo de la reactividad correcta con los servicios que usan async/await.
+- **SCSS**: Por la facilidad que da manejar vistas responsives.
+- **Guard**: Aunque usa datos quemados en un json se uso para la proyección de la ruta home una vez que si inicia sesión el usuario.
+
+## Estructura del proyecto
+```
+src/app/
+├── core/              ← Servicios singleton y guards
+│   ├── services/
+│   └── guards/
+├── shared/            ← Todo lo reutilizable entre páginas
+│   ├── components/ui/ ← Componentes "dumb" (sin lógica de negocio)
+│   └── types/         ← Interfaces TypeScript
+├── layouts/           ← Estructuras visuales reutilizables
+└── pages/             ← Componentes "smart" (con lógica de negocio)
+```
+
 # Backend
 
 ## Descripción general del proyecto
@@ -69,7 +94,7 @@ gestion-pedidos-abc/
 
 ---
 
-## Pasos para ejecutar el sistema con Docker
+# Pasos para ejecutar todo el proyecto en Docker
 
 ### Requisitos previos
 
@@ -107,6 +132,10 @@ Este comando construye las imágenes de los tres microservicios y levanta tambi�
 | users-api | http://localhost:8001/swagger/index.html |
 | order-api | http://localhost:8002/swagger/index.html |
 | payment-api | http://localhost:8003/swagger/index.html |
+
+### 5. Frontend
+Corre en el puerto 4200:
+http://localhost:4200/login
 
 ### 5. Detener el sistema
 
