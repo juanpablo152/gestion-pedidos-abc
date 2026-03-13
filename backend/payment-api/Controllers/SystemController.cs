@@ -2,29 +2,34 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace order_api.Controllers
+namespace payment_api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrderController : ControllerBase {
+    public class SystemController : ControllerBase
+    {
         private readonly IMongoClient _mongoClient;
 
-        public OrderController(IMongoClient mongoClient) {
+        public SystemController(IMongoClient mongoClient)
+        {
             _mongoClient = mongoClient;
         }
 
         [HttpGet("/health")]
-        public IActionResult GetHealth() {
-            return Ok(new { status = "Orders API is healthy" });
+        public IActionResult GetHealth()
+        {
+            return Ok(new { status = "Payments API is healthy" });
         }
 
         [HttpGet("/status")]
-        public IActionResult GetStatus() {
-            return Ok(new { service = "Orders", status = "Running" });
+        public IActionResult GetStatus()
+        {
+            return Ok(new { service = "Payments", status = "Running" });
         }
 
         [HttpGet("/mongo-health")]
-        public async Task<IActionResult> GetMongoHealth() {
+        public async Task<IActionResult> GetMongoHealth()
+        {
             try
             {
                 var db = _mongoClient.GetDatabase("admin");

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { UserService } from '../../../core/services/user-services/user.service';
+import { AuthService } from '../../../core/auth/auth.service';
 
 export interface NavItem {
   label: string;
@@ -11,10 +11,10 @@ export interface NavItem {
 }
 
 const ALL_NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', icon: '📊', route: '/home' },
-  { label: 'Pedidos',   icon: '📦', route: '/orders' },
+  { label: 'Dashboard', icon: '📊', route: '/home', roles: ['admin', 'manager'] },
+  { label: 'Pedidos',   icon: '📦', route: '/orders', roles: ['admin', 'manager'] },
   { label: 'Usuarios',  icon: '👥', route: '/users',    roles: ['admin'] },
-  { label: 'Pagos',     icon: '💳', route: '/payments', roles: ['admin', 'manager'] },
+  { label: 'Pagos',     icon: '💳', route: '/payments', roles: ['admin'] },
 ];
 
 @Component({
@@ -28,10 +28,10 @@ export class SidebarComponent {
   @Input() collapsed = false;
   @Output() toggleCollapse = new EventEmitter<void>();
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService) {}
 
   get currentUser() {
-    return this.userService.getCurrentUser();
+    return this.authService.getCurrentUser();
   }
 
   get visibleNavItems(): NavItem[] {

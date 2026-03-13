@@ -17,13 +17,45 @@
       </div>
     </header>
 
+  @if (pageTitle() === 'Dashboard') {
     <div class="home-body">
       <ui-table
         [title]="pageTitle()"
-        [columns]="columns"
+        [columns]="columnsPaymentsWithOrderInfo"
+        [data]="paymentsWithOrderInfo()"
+        [loading]="loading()"
+      />
+    </div>
+   }
+   @else if (pageTitle() === 'Pedidos') {
+    <div class="home-body">
+      <ui-table
+        [title]="pageTitle()"
+        [columns]="columnsOrders"
+        [data]="orders()"
+        [loading]="loading()"
+      />
+    </div>
+   }
+   @else if (pageTitle() === 'Usuarios') {
+    <div class="home-body">
+      <ui-table
+        [title]="pageTitle()"
+        [columns]="columnsUsers"
         [data]="users()"
         [loading]="loading()"
       />
     </div>
+   }
+   @else if (pageTitle() === 'Pagos') {
+    <div class="home-body">
+      <ui-table
+        [title]="pageTitle()"
+        [columns]="columnsPayments"
+        [data]="payments()"
+        [loading]="loading()"
+      />
+    </div>
+   }
   </div>
 </app-main-layout>

@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, lastValueFrom, map } from 'rxjs';
-import { User, AuthUser, UserRegister } from '../../../shared/types/user/user.interface';
-import environment from '../../../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import environment from '../../../../environments/environment';
+import { AuthUser, User, UserRegister } from '../../shared/types/user/user.interface';
+
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class AuthService {
   private readonly STORAGE_KEY = 'auth_user';
-  private readonly API_URL = environment.apiUrl + '/users';
 
   constructor(private http: HttpClient,) {}
 
@@ -30,10 +30,6 @@ export class UserService {
     return undefined;
   }
 
-  async getUsers(): Promise<UserRegister[]> {
-    return await lastValueFrom(this.http.get<UserRegister[]>(this.API_URL));
-  }
-
   logout(): void {
     sessionStorage.removeItem(this.STORAGE_KEY);
   }
@@ -47,3 +43,4 @@ export class UserService {
     return !!this.getCurrentUser();
   }
 }
+

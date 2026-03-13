@@ -16,13 +16,13 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./pages/home/home').then((m) => m.Home),
     canActivate: [authGuard],
-    data: { title: 'Dashboard' },
+    data: { title: 'Dashboard', roles: ['admin', 'manager'] },
   },
   {
     path: 'orders',
     loadComponent: () => import('./pages/home/home').then((m) => m.Home),
     canActivate: [authGuard],
-    data: { title: 'Pedidos' },
+    data: { title: 'Pedidos', roles: ['admin', 'manager'] },
   },
   {
     path: 'users',
@@ -34,7 +34,7 @@ export const routes: Routes = [
     path: 'payments',
     loadComponent: () => import('./pages/home/home').then((m) => m.Home),
     canActivate: [authGuard, roleGuard],
-    data: { title: 'Pagos', roles: ['admin', 'manager'] },
+    data: { title: 'Pagos', roles: ['admin'] },
   },
   {
     path: '**',

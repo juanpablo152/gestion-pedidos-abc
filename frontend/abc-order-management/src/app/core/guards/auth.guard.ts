@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { UserService } from '../services/user-services/user.service';
+import { AuthService } from '../auth/auth.service';
 
 export const authGuard: CanActivateFn = () => {
-  const userService = inject(UserService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (userService.isAuthenticated()) {
+  if (authService.isAuthenticated()) {
     return true;
   }
 
@@ -14,10 +14,10 @@ export const authGuard: CanActivateFn = () => {
 };
 
 export const guestGuard: CanActivateFn = () => {
-  const userService = inject(UserService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (!userService.isAuthenticated()) {
+  if (!authService.isAuthenticated()) {
     return true;
   }
 
@@ -25,10 +25,10 @@ export const guestGuard: CanActivateFn = () => {
 };
 
 export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-  const userService = inject(UserService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  const user = userService.getCurrentUser();
+  const user = authService.getCurrentUser();
   if (!user) {
     return router.createUrlTree(['/login']);
   }

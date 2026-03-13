@@ -15,6 +15,13 @@
       </thead>
       <tbody>
         @if (loading) {
+          @for (row of [1, 2, 3, 4, 5]; track $index) {
+            <tr class="skeleton-row">
+              @for (col of columns; track col.key) {
+                <td><span class="skeleton"></span></td>
+              }
+            </tr>
+          }
         } @else if (data.length === 0) {
           <tr>
             <td [attr.colspan]="columns.length" class="table-empty">
@@ -25,7 +32,15 @@
           @for (row of data; track $index) {
             <tr>
               @for (col of columns; track col.key) {
-                <td [title]="getCellValue(row, col)">{{ getCellValue(row, col) }}</td>
+                <td [title]="getCellValue(row, col)">
+                  @if (isBadge(col)) {
+                    <span [class]="getBadgeClass(row, col)">
+                      {{ getCellValue(row, col) }}
+                    </span>
+                  } @else {
+                    {{ getCellValue(row, col) }}
+                  }
+                </td>
               }
             </tr>
           }

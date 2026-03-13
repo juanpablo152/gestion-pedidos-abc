@@ -1,9 +1,22 @@
 services:
-  db_mongo:
+
+  db_users:
     image: mongo:latest
-    container_name: abc_mongodb
+    container_name: abc_mongo_users
     ports:
-      - "27017:27017"
+      - "27018:27017"
+
+  db_orders:
+    image: mongo:latest
+    container_name: abc_mongo_orders
+    ports:
+      - "27019:27017"
+
+  db_payments:
+    image: mongo:latest
+    container_name: abc_mongo_payments
+    ports:
+      - "27020:27017"
 
   users-service:
     build:
@@ -14,7 +27,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
-      - db_mongo
+      - db_users
 
   order-service:
     build:
@@ -24,8 +37,10 @@ services:
       - "8002:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - UsersApi__BaseUrl=http://users-service:8080
     depends_on:
-      - db_mongo
+      - db_orders
+      - users-service
 
   payment-service:
     build:
@@ -35,9 +50,11 @@ services:
       - "8003:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - OrdersApi__BaseUrl=http://order-service:8080
     depends_on:
-      - db_mongo
-  
+      - db_payments
+      - order-service
+
   frontend:
     build:
       context: ./frontend/abc-order-management

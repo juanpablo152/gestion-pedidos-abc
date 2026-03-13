@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../core/services/user-services/user.service';
+import { UserService } from '../../core/services/user/user.service';
 import { InputComponent } from '../../shared/components/ui/input/input';
 import { ButtonComponent } from '../../shared/components/ui/button/button';
 import { AuthLayout } from '../../layouts/auth-layout/auth-layout';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class Login {
   errorMessage = signal('');
 
   constructor(
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
   ) {}
 
@@ -44,7 +45,7 @@ export class Login {
       this.loading.set(true);
       this.errorMessage.set('');
       const { username, password } = this.form.value;
-      const user = await this.userService.login(username!, password!);
+      const user = await this.authService.login(username!, password!);
       this.loading.set(false);
       if (!user) {
         this.errorMessage.set('Credenciales incorrectas. Verifica tu usuario y contraseña.');
