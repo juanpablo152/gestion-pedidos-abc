@@ -2,7 +2,7 @@
   --primary: #1a56db;
   --primary-dark: #1344b5;
   --primary-light: #e8f0fe;
-  --sidebar-bg: #1e2235;
+  --primary-bg-dark: #1e2235;
   --sidebar-text: #8b9dc3;
   --sidebar-hover: #2a3250;
   --bg: #f5f7fb;
@@ -20,6 +20,11 @@
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
   --transition: 0.18s ease;
+}
+
+[data-theme='dark'] {
+  --bg: #121212;
+  --text: #e0e0e0;
 }
 
 *,

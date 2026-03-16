@@ -11,5 +11,6 @@ namespace order_api.Application.Interfaces
         Task<OrderResponseDto> UpdateOrderAsync(string id, CreateUpdateOrderDto order);
         Task<bool> DeleteOrderByIdAsync(string id);
         Task<IEnumerable<OrderCompleteResponseDto>> GetAllOrdersWithUserAsync();
+        Task<OrderResponseDto> PatchOrderStatusAsync(string id, UpdateOrderStatusDto dto);
     }
 }

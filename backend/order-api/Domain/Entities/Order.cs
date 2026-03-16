@@ -14,6 +14,8 @@ namespace order_api.Domain.Entities
 
         public List<OrderItem> Items { get; set; } = [];
 
+        [BsonRepresentation(BsonType.String)]
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public decimal TotalAmount { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
@@ -24,5 +26,12 @@ namespace order_api.Domain.Entities
         public string ProductName { get; set; } = null!;
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
+    }
+    
+    public enum OrderStatus
+    {
+        Pending,
+        Completed,
+        Cancelled,
     }
 }

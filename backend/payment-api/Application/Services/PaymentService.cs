@@ -85,7 +85,7 @@ namespace payment_api.Application.Services
             {
                 var orderExists = await _orderApiClient.OrderExistsAsync(dto.OrderId);
                 if (!orderExists)
-                    throw new KeyNotFoundException($"La orden con id '{dto.OrderId}' no existe.");
+                    throw new KeyNotFoundException($"La orden con id no existe.");
 
                 var entity = new Payment
                 {
@@ -97,6 +97,12 @@ namespace payment_api.Application.Services
                 };
 
                 await _repository.CreatePaymentAsync(entity);
+
+                if (dto.Status == PaymentStatus.Completed) {
+                    await _orderApiClient.UpdateOrderStatusAsync(dto.OrderId, OrderStatus.Completed);
+                } else {
+                    await _orderApiClient.UpdateOrderStatusAsync(dto.OrderId, OrderStatus.Pending);
+                }
                 return new PaymentResponseDto(
                     entity.Id!,
                     entity.OrderId,
@@ -143,6 +149,13 @@ namespace payment_api.Application.Services
                 existing.UpdatedAt = DateTime.UtcNow;
 
                 await _repository.UpdatePaymentAsync(id, existing);
+
+                if (dto.Status == PaymentStatus.Completed) {
+                    await _orderApiClient.UpdateOrderStatusAsync(existing.OrderId, OrderStatus.Completed);
+                } else {
+                    await _orderApiClient.UpdateOrderStatusAsync(existing.OrderId, OrderStatus.Pending);
+                }
+
                 return new PaymentResponseDto(
                     existing.Id!,
                     existing.OrderId,
@@ -187,11 +200,9 @@ namespace payment_api.Application.Services
         {
             try
             {
-                // Una sola llamada a payments-db y una sola llamada a order-api
                 var payments = await _repository.GetAllPaymentsAsync();
                 var orders = await _orderApiClient.GetAllOrdersWithUserAsync();
 
-                // Diccionario para lookup O(1) por orderId
                 var orderMap = orders.ToDictionary(o => o.Id);
 
                 return payments.Select(p =>
@@ -207,6 +218,7 @@ namespace payment_api.Application.Services
                         p.OrderId,
                         order?.TotalAmount ?? 0,
                         order?.Items ?? [],
+                        order?.Status ?? OrderStatus.Pending,
                         order?.UserName ?? "—",
                         order?.UserEmail ?? "—",
                         order?.UserAddress ?? "—"

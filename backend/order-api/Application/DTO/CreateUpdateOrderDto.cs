@@ -4,6 +4,7 @@ namespace order_api.Application.DTO
 {
     public record CreateUpdateOrderDto(
         string UserId,
-        List<OrderItemDto> Items
+        List<OrderItemDto> Items,
+        OrderStatus Status
     );
 }

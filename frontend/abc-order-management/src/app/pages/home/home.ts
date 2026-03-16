@@ -5,11 +5,12 @@ import { TableColumn } from '../../shared/types/table/table.interface';
 import { UserService } from '../../core/services/user/user.service';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { UserRegister } from '../../shared/types/user/user.interface';
-import { AuthService } from '../../core/auth/auth.service';
-import { OrderService } from '../../core/order/order.service';
-import { PaymentService } from '../../core/payment/payment.service';
 import { OrderResponse } from '../../shared/types/order/order.interface';
 import { PaymentResponse } from '../../shared/types/payment/payment.interface';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { OrderService } from '../../core/services/order/order.service';
+import { PaymentService } from '../../core/services/payment/payment.service';
+import { ThemeService } from '../../core/theme/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -68,6 +69,7 @@ export class Home implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
+    public themeService: ThemeService,
   ) {}
 
   get currentUser() {

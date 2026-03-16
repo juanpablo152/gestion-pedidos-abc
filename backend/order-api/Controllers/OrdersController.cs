@@ -57,6 +57,13 @@ namespace order_api.Controllers
             return Ok(updated);
         }
 
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> PatchOrderStatus(string id, [FromBody] UpdateOrderStatusDto dto)
+        {
+            var updated = await _orderService.PatchOrderStatusAsync(id, dto);
+            return Ok(updated);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(string id)
         {

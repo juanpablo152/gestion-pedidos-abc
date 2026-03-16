@@ -29,7 +29,6 @@ namespace payment_api.Domain.Entities
         Cash,
         CreditCard,
         DebitCard,
-        BankTransfer
     }
 
     public enum PaymentStatus
@@ -37,6 +36,5 @@ namespace payment_api.Domain.Entities
         Pending,
         Completed,
         Failed,
-        Refunded
     }
 }

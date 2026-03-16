@@ -10,6 +10,7 @@ namespace payment_api.Application.DTO
         string OrderId,
         decimal OrderTotalAmount,
         List<OrderItemDto> OrderItems,
+        OrderStatus OrderStatus,
         string UserName,
         string UserEmail,
         string UserAddress

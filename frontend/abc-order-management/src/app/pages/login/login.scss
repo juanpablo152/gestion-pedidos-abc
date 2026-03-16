@@ -5,17 +5,16 @@
 
 .login-head {
   margin-bottom: 32px;
+  color: var(--text);
 
   h2 {
     font-size: 26px;
     font-weight: 700;
-    color: var(--text);
     margin-bottom: 6px;
   }
 
   p {
     font-size: 14px;
-    color: var(--text-light);
   }
 }
 

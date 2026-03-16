@@ -7,6 +7,7 @@ namespace payment_api.Application.DTO
         string UserAddress,
         List<OrderItemDto> Items,
         decimal TotalAmount,
+        OrderStatus Status,
         DateTime CreatedAt,
         DateTime? UpdatedAt
     );
@@ -16,4 +17,11 @@ namespace payment_api.Application.DTO
         int Quantity,
         decimal UnitPrice
     );
+
+    public enum OrderStatus
+    {
+        Pending,
+        Completed,
+        Cancelled,
+    }
 }

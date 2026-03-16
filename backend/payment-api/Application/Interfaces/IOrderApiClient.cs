@@ -6,5 +6,6 @@ namespace payment_api.Application.Interfaces
     {
         Task<bool> OrderExistsAsync(string orderId);
         Task<IEnumerable<OrderWithUserDto>> GetAllOrdersWithUserAsync();
+        Task UpdateOrderStatusAsync(string orderId, OrderStatus status);
     }
 }

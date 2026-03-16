@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import environment from '../../../../environments/environment';
-import { OrderResponse } from '../../shared/types/order/order.interface';
-import { PaymentResponse } from '../../shared/types/payment/payment.interface';
+import environment from '../../../../../environments/environment';
+import { PaymentResponse } from '../../../shared/types/payment/payment.interface';
 
 @Injectable({
   providedIn: 'root',

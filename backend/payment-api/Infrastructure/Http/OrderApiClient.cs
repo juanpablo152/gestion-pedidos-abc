@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using payment_api.Application.DTO;
 using payment_api.Application.Interfaces;
+using System.Text.Json;
 
 namespace payment_api.Infrastructure.Http
 {
@@ -47,6 +48,32 @@ namespace payment_api.Infrastructure.Http
             catch
             {
                 throw new ApplicationException("No se pudo contactar al servicio de órdenes. Intente más tarde.");
+            }
+        }
+
+        public async Task UpdateOrderStatusAsync(string orderId, OrderStatus status)
+        {
+            try
+            {
+                var body = new UpdateOrderStatusDto(status);
+                var response = await _httpClient.PatchAsJsonAsync($"/api/orders/{orderId}/status", body);
+
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                    throw new KeyNotFoundException($"La orden con id '{orderId}' no existe en order-api.");
+
+                response.EnsureSuccessStatusCode();
+            }
+            catch (KeyNotFoundException)
+            {
+                throw;
+            }
+            catch (ApplicationException)
+            {
+                throw;
+            }
+            catch
+            {
+                throw new ApplicationException("No se pudo actualizar el estado de la orden. Intente más tarde.");
             }
         }
     }

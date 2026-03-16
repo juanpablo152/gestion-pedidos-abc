@@ -1,3 +1,5 @@
+using order_api.Domain.Entities;
+
 namespace order_api.Application.DTO
 {
     public record OrderResponseDto(
@@ -5,6 +7,7 @@ namespace order_api.Application.DTO
         string UserId,
         List<OrderItemDto> Items,
         decimal TotalAmount,
+        OrderStatus Status,
         DateTime CreatedAt,
         DateTime? UpdatedAt
     );
@@ -16,6 +19,7 @@ namespace order_api.Application.DTO
         string UserAddress,
         List<OrderItemDto> Items,
         decimal TotalAmount,
+        OrderStatus Status,
         DateTime CreatedAt,
         DateTime? UpdatedAt
     );

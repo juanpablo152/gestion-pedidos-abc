@@ -25,6 +25,7 @@ namespace order_api.Application.Services
                     o.UserId,
                     o.Items.Select(i => new OrderItemDto(i.ProductName, i.Quantity, i.UnitPrice)).ToList(),
                     o.TotalAmount,
+                    o.Status,
                     o.CreatedAt,
                     o.UpdatedAt
                 ));
@@ -45,6 +46,7 @@ namespace order_api.Application.Services
                     o.UserId,
                     o.Items.Select(i => new OrderItemDto(i.ProductName, i.Quantity, i.UnitPrice)).ToList(),
                     o.TotalAmount,
+                    o.Status,
                     o.CreatedAt,
                     o.UpdatedAt
                 ));
@@ -73,11 +75,8 @@ namespace order_api.Application.Services
         {
             try
             {
-                // Una sola llamada a orders-db y una sola llamada a users-api
                 var orders = await _repository.GetAllOrdersAsync();
                 var users = await _userApiClient.GetAllUsersAsync();
-
-                // Diccionario para lookup O(1) por userId
                 var userMap = users.ToDictionary(u => u.Id);
 
                 return orders.Select(o =>
@@ -90,6 +89,7 @@ namespace order_api.Application.Services
                         user?.Address ?? "—",
                         o.Items.Select(i => new OrderItemDto(i.ProductName, i.Quantity, i.UnitPrice)).ToList(),
                         o.TotalAmount,
+                        o.Status,
                         o.CreatedAt,
                         o.UpdatedAt
                     );
@@ -191,12 +191,45 @@ namespace order_api.Application.Services
             }
         }
 
+        public async Task<OrderResponseDto> PatchOrderStatusAsync(string id, UpdateOrderStatusDto dto)
+        {
+            try
+            {
+                var existing = await _repository.GetOrderByIdAsync(id);
+                if (existing is null)
+                    throw new KeyNotFoundException($"La orden con id '{id}' no existe.");
+
+                existing.Status = dto.Status;
+                existing.UpdatedAt = DateTime.UtcNow;
+
+                await _repository.UpdateOrderAsync(id, existing);
+                return new OrderResponseDto(
+                    existing.Id!,
+                    existing.UserId,
+                    existing.Items.Select(i => new OrderItemDto(i.ProductName, i.Quantity, i.UnitPrice)).ToList(),
+                    existing.TotalAmount,
+                    existing.Status,
+                    existing.CreatedAt,
+                    existing.UpdatedAt
+                );
+            }
+            catch (KeyNotFoundException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error al actualizar el estado de la orden.", ex);
+            }
+        }
+
         private static OrderResponseDto MapToDto(Order o) =>
             new(
                 o.Id!,
                 o.UserId,
                 o.Items.Select(i => new OrderItemDto(i.ProductName, i.Quantity, i.UnitPrice)).ToList(),
                 o.TotalAmount,
+                o.Status,
                 o.CreatedAt,
                 o.UpdatedAt
             );

@@ -10,7 +10,7 @@
   justify-content: space-between;
   padding: 0 28px;
   height: var(--header-height);
-  background: var(--white);
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
   gap: 16px;
   flex-wrap: wrap;
@@ -31,7 +31,7 @@
 
 .page-subtitle {
   font-size: 12px;
-  color: var(--text-light);
+  color: var(--text);
 }
 
 .header-right {
@@ -78,7 +78,7 @@
 
 .user-role {
   font-size: 11px;
-  color: var(--text-light);
+  color: var(--text);
   text-transform: capitalize;
 }
 
@@ -86,16 +86,16 @@
   padding: 7px 14px;
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  background: var(--white);
-  color: var(--text-light);
+  background: var(--bg);
+  color: var(--text);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition);
 
   &:hover {
-    border-color: var(--error);
-    color: var(--error);
+    border-color: var(--primary);
+    color: var(--primary);
     background: #fff5f5;
   }
 }
@@ -154,7 +154,7 @@
 
 .stat-label {
   font-size: 12px;
-  color: var(--text-light);
+  color: var(--text);
   margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;

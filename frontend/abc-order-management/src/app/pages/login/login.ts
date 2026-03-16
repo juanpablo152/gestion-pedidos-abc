@@ -5,7 +5,7 @@ import { UserService } from '../../core/services/user/user.service';
 import { InputComponent } from '../../shared/components/ui/input/input';
 import { ButtonComponent } from '../../shared/components/ui/button/button';
 import { AuthLayout } from '../../layouts/auth-layout/auth-layout';
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
